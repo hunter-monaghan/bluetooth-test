@@ -86,24 +86,49 @@ const Bluetooth = () => {
     };
   }, []);
   
-  const scanAndConnect = (bleManager) => {
+//   const scanAndConnect = (bleManager) => {
+//     console.log('BLE MANAGER: ', bleManager)
+//     if (!bleManager) {
+//       console.error("BleManager is null");
+//       return;
+//     }
+  
+//     bleManager.startDeviceScan(null, null, (error, device) => {
+//       if (error) {
+//         console.error("Error during device scan:", error);
+//         return;
+//       }
+  
+//       if (device) {
+//         console.log("Discovered device:", device.name, device.id);
+//         if (device.name === "TI BLE Sensor Tag" || device.name === "SensorTag") {
+//           bleManager.stopDeviceScan();
+//           setDevices((prevDevices) => [...prevDevices, device]);
+//         }
+//       }
+//     });
+//   };
+const scanAndConnect = (bleManager) => {
     if (!bleManager) {
       console.error("BleManager is null");
       return;
     }
-
+  
     bleManager.startDeviceScan(null, null, (error, device) => {
       if (error) {
         console.error("Error during device scan:", error);
         return;
       }
-
-      if (device.name === "TI BLE Sensor Tag" || device.name === "SensorTag") {
+  
+      if (device && !devices.some((d) => d.id === device.id)) {
+        console.log("Discovered device:", device.name, device.id);
         bleManager.stopDeviceScan();
         setDevices((prevDevices) => [...prevDevices, device]);
       }
     });
   };
+  
+  
 
   return (
     <View>

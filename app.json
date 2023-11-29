@@ -1,4 +1,14 @@
 {
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+    "preview": {
+      "distribution": "internal"
+    },
+    "production": {}
+  },
   "expo": {
     "name": "bluetooth-test",
     "slug": "bluetooth-test",
@@ -21,7 +31,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.hunter.monaghan.bluetoothtest"
     },
     "web": {
       "favicon": "./assets/favicon.png"

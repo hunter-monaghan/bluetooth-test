@@ -1,12 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Button, Platform, PermissionsAndroid } from "react-native";
+import {
+  View,
+  Text,
+  Button,
+  Platform,
+  FlatList,
+  PermissionsAndroid,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 import { BleManager } from "react-native-ble-plx";
 
 const Bluetooth = () => {
   const [devices, setDevices] = useState([]);
   const [manager, setManager] = useState(null);
-  console.log('MANAGER: ', manager)
-  console.log('DEVICES: ', devices)
+  console.log("MANAGER: ", manager);
+  console.log("DEVICES: ", devices);
   //   const manager = new BleManager();
 
   const requestBluetoothPermission = async () => {
@@ -53,19 +62,18 @@ const Bluetooth = () => {
 
   const initializeBluetooth = async () => {
     try {
+      let bleManager;
       if (await requestBluetoothPermission()) {
-        const bleManager = new BleManager();
-        console.log("bleManager: ", bleManager);
+        bleManager = new BleManager();
         setManager(bleManager);
-  
+
         const subscription = bleManager.onStateChange((state) => {
-          console.log("STATE: ", state);
           if (state === "PoweredOn") {
             scanAndConnect(bleManager);
             subscription.remove();
           }
         }, true);
-  
+
         return () => {
           // Cleanup function
           subscription.remove();
@@ -75,51 +83,54 @@ const Bluetooth = () => {
       console.error("Bluetooth initialization error:", error);
       // Handle the error, e.g., show a user-friendly message
     }
+
+    // Return an empty cleanup function if initialization fails
+    return () => {};
   };
-  
+
   useEffect(() => {
     const cleanup = initializeBluetooth();
-  
+
     return () => {
       // Cleanup function when the component is unmounted
       cleanup && cleanup();
     };
   }, []);
-  
-//   const scanAndConnect = (bleManager) => {
-//     console.log('BLE MANAGER: ', bleManager)
-//     if (!bleManager) {
-//       console.error("BleManager is null");
-//       return;
-//     }
-  
-//     bleManager.startDeviceScan(null, null, (error, device) => {
-//       if (error) {
-//         console.error("Error during device scan:", error);
-//         return;
-//       }
-  
-//       if (device) {
-//         console.log("Discovered device:", device.name, device.id);
-//         if (device.name === "TI BLE Sensor Tag" || device.name === "SensorTag") {
-//           bleManager.stopDeviceScan();
-//           setDevices((prevDevices) => [...prevDevices, device]);
-//         }
-//       }
-//     });
-//   };
-const scanAndConnect = (bleManager) => {
+
+  //   const scanAndConnect = (bleManager) => {
+  //     console.log('BLE MANAGER: ', bleManager)
+  //     if (!bleManager) {
+  //       console.error("BleManager is null");
+  //       return;
+  //     }
+
+  //     bleManager.startDeviceScan(null, null, (error, device) => {
+  //       if (error) {
+  //         console.error("Error during device scan:", error);
+  //         return;
+  //       }
+
+  //       if (device) {
+  //         console.log("Discovered device:", device.name, device.id);
+  //         if (device.name === "TI BLE Sensor Tag" || device.name === "SensorTag") {
+  //           bleManager.stopDeviceScan();
+  //           setDevices((prevDevices) => [...prevDevices, device]);
+  //         }
+  //       }
+  //     });
+  //   };
+  const scanAndConnect = (bleManager) => {
     if (!bleManager) {
       console.error("BleManager is null");
       return;
     }
-  
+
     bleManager.startDeviceScan(null, null, (error, device) => {
       if (error) {
         console.error("Error during device scan:", error);
         return;
       }
-  
+
       if (device && !devices.some((d) => d.id === device.id)) {
         console.log("Discovered device:", device.name, device.id);
         bleManager.stopDeviceScan();
@@ -127,18 +138,55 @@ const scanAndConnect = (bleManager) => {
       }
     });
   };
-  
-  
 
   return (
-    <View>
-      <Text>Discovered Devices:</Text>
-      {devices.map((device) => (
-        <Text key={device.id}>{device.name || "Unnamed Device"}</Text>
-      ))}
-      <Button title="Scan Devices" onPress={() => scanAndConnect(manager)} />
+    <View style={styles.container}>
+      <Text style={styles.heading}>Discovered Devices:</Text>
+      <FlatList
+        data={devices}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <Text style={styles.deviceText}>{item.name || "Unnamed Device"}</Text>
+        )}
+      />
+      <TouchableOpacity
+        style={styles.scanButton}
+        onPress={() => scanAndConnect(manager)}
+      >
+        <Text style={styles.buttonText}>Scan Devices</Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
 export default Bluetooth;
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      padding: 16,
+      backgroundColor: "#f5f5f5",
+    },
+    heading: {
+      fontSize: 18,
+      marginTop: 20,
+      fontWeight: "bold",
+      marginBottom: 8,
+    },
+    deviceText: {
+      fontSize: 16,
+      marginBottom: 4,
+    },
+    scanButton: {
+      backgroundColor: "#007AFF",
+      paddingVertical: 12,
+      alignItems: "center",
+      borderRadius: 8,
+      marginTop: 16,
+    },
+    buttonText: {
+      color: "white",
+      fontSize: 16,
+      fontWeight: "bold",
+    },
+  });

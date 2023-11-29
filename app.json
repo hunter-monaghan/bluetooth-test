@@ -25,6 +25,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "88e30c00-f356-495a-952b-ab9132224c0d"
+      }
+    },
+    "owner": "hunter.monaghan"
   }
 }

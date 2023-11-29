@@ -21,14 +21,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: "1rem",
+    marginBottom: 20,
     textDecorationStyle: 'solid',
     textDecorationLine: 'underline',
 
   },
-  bluetoothView: {
-    marginBottom: "20px",
-    marginTop: "40px",
-    paddingTop: '10px'
-  },
+  // bluetoothView: {
+  //   marginBottom: "20px",
+  //   marginTop: "40px",
+  //   paddingTop: '10px'
+  // },
 });

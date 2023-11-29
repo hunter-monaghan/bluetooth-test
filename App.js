@@ -23,7 +23,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginBottom: "1rem",
     textDecorationStyle: 'solid',
-    textDecorationLine: 'underline'
+    textDecorationLine: 'underline',
+
   },
   bluetoothView: {
     marginBottom: "20px",

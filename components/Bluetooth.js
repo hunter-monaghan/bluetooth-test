@@ -146,7 +146,11 @@ const Bluetooth = () => {
         data={devices}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <Text style={styles.deviceText}>{item.name || "Unnamed Device"}</Text>
+          <TouchableOpacity>
+            <Text style={styles.deviceText}>
+              {item.name || "Unnamed Device"}
+            </Text>
+          </TouchableOpacity>
         )}
       />
       <TouchableOpacity
@@ -162,31 +166,31 @@ const Bluetooth = () => {
 export default Bluetooth;
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      padding: 16,
-      backgroundColor: "#f5f5f5",
-    },
-    heading: {
-      fontSize: 18,
-      marginTop: 20,
-      fontWeight: "bold",
-      marginBottom: 8,
-    },
-    deviceText: {
-      fontSize: 16,
-      marginBottom: 4,
-    },
-    scanButton: {
-      backgroundColor: "#007AFF",
-      paddingVertical: 12,
-      alignItems: "center",
-      borderRadius: 8,
-      marginTop: 16,
-    },
-    buttonText: {
-      color: "white",
-      fontSize: 16,
-      fontWeight: "bold",
-    },
-  });
+  container: {
+    flex: 2,
+    padding: 16,
+    backgroundColor: "#f5f5f5",
+  },
+  heading: {
+    fontSize: 18,
+    marginTop: 20,
+    fontWeight: "bold",
+    marginBottom: 8,
+  },
+  deviceText: {
+    fontSize: 16,
+    marginBottom: 4,
+  },
+  scanButton: {
+    backgroundColor: "#007AFF",
+    paddingVertical: 12,
+    alignItems: "center",
+    borderRadius: 8,
+    marginTop: 16,
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+});

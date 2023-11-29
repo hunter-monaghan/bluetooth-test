@@ -8,8 +8,10 @@ import {
   PermissionsAndroid,
   TouchableOpacity,
   StyleSheet,
+  Dimensions,
 } from "react-native";
 import { BleManager } from "react-native-ble-plx";
+const windowWidth = Dimensions.get('window').width;
 
 const Bluetooth = () => {
   const [devices, setDevices] = useState([]);
@@ -171,9 +173,12 @@ export default Bluetooth;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 2,
-    padding: 16,
-    backgroundColor: "#f5f5f5",
+    flex: 1,
+    padding: 20,
+    marginTop:'5%',
+    width: windowWidth,
+    backgroundColor: "#DDDDDD",
+    borderRadius: '30%'
   },
   heading: {
     fontSize: 18,

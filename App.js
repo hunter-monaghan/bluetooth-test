@@ -5,7 +5,7 @@ import Bluetooth from "./components/Bluetooth";
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>SCAN FOR BLUETOOTH CONNECTIONS!</Text>
+      {/* <Text style={styles.text}>SCAN FOR BLUETOOTH CONNECTIONS!</Text> */}
       <View style={styles.bluetoothView}>
         <Bluetooth />
       </View>
@@ -17,18 +17,20 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 20,
-    backgroundColor: "#fff",
+    marginTop: "10%",
+    marginBottom: "20%",
+    backgroundColor: "#007AFF",
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 20,
-    textDecorationStyle: 'solid',
-    textDecorationLine: 'underline',
-
+    textDecorationStyle: "solid",
+    textDecorationLine: "underline",
+    borderRadius: "30%",
   },
-  // bluetoothView: {
-  //   marginBottom: "20px",
-  //   marginTop: "40px",
-  //   paddingTop: '10px'
-  // },
+  bluetoothView: {},
+  text: {
+    fontWeight: "bold",
+    fontSize: "20%",
+    color: "black",
+    // backgroundColor: '#007AFF'
+  },
 });
